@@ -10,7 +10,7 @@
 Eventually I will add a way to do this in game
 1. Strings.lua
 2. Add to strings_generic
-3. Escape any quotes or apostrophes (i.e. The word "can't" becomes "can\\\'t"
+3. Escape any quotes or apostrophes
 
 
 ## Notes
