@@ -2,7 +2,7 @@
 ## Title: Raid Bingo
 ## Author: Cale Workman
 ## Version: 0.1.0
-## SavedVariables: RaidBingoDB
+## SavedVariables: showBoard
 
 # Order is important
 Libs\LibDBIcon-1.0\LibStub\LibStub.lua

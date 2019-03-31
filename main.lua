@@ -23,8 +23,10 @@ end
 function ToggleVisible(self, button, down)
 	if button == "LeftButton" then
 		if BingoFrame:IsVisible() then
+			showBoard = false
 			BingoFrame:Hide()
 		else
+			showBoard = true
 			BingoFrame:Show()
 		end
 	elseif button == "RightButton" then
@@ -41,6 +43,21 @@ function DehighlightBorder()
 	BingoFrame.texture:SetColorTexture(1,1,1,0)
 end
 
+-- Event Handler
+function eventHandler(self, event)
+	if event == "PLAYER_REGEN_DISABLED" then -- enter/in combat
+		BingoFrame:Hide()
+	elseif event == "PLAYER_REGEN_ENABLED" then -- left/out of combat
+		if showBoard then
+			BingoFrame:Show()
+		end
+	elseif event == "ADDON_LOADED" then
+		if showBoard then
+			BingoFrame:Show()
+		end
+	end
+end
+
 -- Minimap Icon
 local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 	type = "data source",
@@ -48,7 +65,7 @@ local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 	icon = "Interface\\Icons\\classicon_demonhunter",--"Interface\\Icons\\INV_Chest_Cloth_17",
 	OnClick = ToggleVisible,
 	OnTooltipShow = function(tt)
-		tt:AddLine("Raid Bingo")
+		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.1"))
 		tt:AddLine(" ")
 		tt:AddLine("Left Click: Hide")
 		tt:AddLine("Right Click: Reset/Randomize")
@@ -69,6 +86,10 @@ BingoFrame:SetScript("OnDragStart", BingoFrame.StartMoving)
 BingoFrame:SetScript("OnDragStop", BingoFrame.StopMovingOrSizing)
 BingoFrame:SetScript("OnEnter", HighlightBorder)
 BingoFrame:SetScript("OnLeave", DehighlightBorder)
+BingoFrame:SetScript("OnEvent", eventHandler)
+BingoFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+BingoFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+BingoFrame:RegisterEvent("ADDON_LOADED")
 BingoFrame:SetClampedToScreen(true)
 
 local t = BingoFrame:CreateTexture(nil, "BACKGROUND")
@@ -176,6 +197,11 @@ DrawBoard(N, square_text)
 
 -- Display
 BingoFrame:SetPoint("CENTER", -400, 0)
-BingoFrame:Show()
+if showBoard or showBoard == nil then
+	showBoard = true
+	BingoFrame:Show()
+else 
+	BingoFrame:Hide()
+end
 
 
