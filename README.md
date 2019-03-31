@@ -14,7 +14,6 @@ Eventually I will add a way to do this in game
 
 
 ## Notes
-1. The minimap icon is a cloth chest, I'm going to change this soon
-2. You have to do /reload to reset the board
-3. It does not save between sessions, so logging out will reset it.
+1. You have to do /reload to reset the board
+2. It does not save between sessions, so logging out will reset it.
 

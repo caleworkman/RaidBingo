@@ -45,7 +45,7 @@ end
 local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 	type = "data source",
 	text = "Raid Bingo",
-	icon = "Interface\\Icons\\INV_Chest_Cloth_17",
+	icon = "Interface\\Icons\\classicon_demonhunter",--"Interface\\Icons\\INV_Chest_Cloth_17",
 	OnClick = ToggleVisible,
 	OnTooltipShow = function(tt)
 		tt:AddLine("Raid Bingo")
