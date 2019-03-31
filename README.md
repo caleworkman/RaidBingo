@@ -4,7 +4,7 @@
 1. Clone or Download 
 2. Download ZIP
 3. Rename to RaidBingo
-4. Add folder to: ...\\World of Warcraft\\_retail_\\Interface\\AddOns
+4. Add folder to: '...\\World of Warcraft\\\_retail\_\\Interface\\AddOns'
 
 ## Customizing the Squares
 Eventually I will add a way to do this in game
