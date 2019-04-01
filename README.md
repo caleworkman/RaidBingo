@@ -1,6 +1,6 @@
 # WOW Raid Bingo
 
-## Instructions
+## Setup Instructions
 1. Clone or Download 
 2. Download ZIP
 3. Rename to RaidBingo
