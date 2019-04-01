@@ -5,7 +5,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- TODO: Save show/hide on start variable
 - TODO: Reset the board button isn't clearing old frames
 - TODO: Import string ability
 - TODO: Save game strings
