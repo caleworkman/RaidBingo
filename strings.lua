@@ -35,7 +35,7 @@ strings_generic = {
 	'Forgot Bonus Rolls',
 	'Wipe on Farm Boss',
 	'Becca Backseat Healing',
-	'Misunderstand Mechanices',
+	'Misunder- stood Mechanics',
 	'Someone Explains Mechanic Wrong',
 	'Someone Late',
 	'Inexplicable Absence'
