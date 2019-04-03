@@ -1,29 +1,3 @@
-strings_tare = {
-	'Dies on Trash',
-	'Mentions BoE Drop',
-	'Threatens to Stop Raiding',
-	'Unprepared',
-	'Loot Drop',
-	'Dies First',
-	'Mentions DPS',
-	'Mythics?',
-	'Mentions School',
-	'Mentions Alt Gearing',
-	'Titanforge',
-	'Pulls Boss or Trash',
-	'X% Upgrade',
-	'Asks for Loot',
-	'Needs Re-Explaination',
-	'That\'s What She Said',
-	'X Keyed',
-	'Inappropriate Comment',
-	'RNG',
-	'Complains About Loot',
-	'Late to Raid',
-	'Not Feeling Well',
-	'Wastes Cooldowns'
-	}
-	
 strings_generic = {
 	'Tare Dies on Trash',
 	'Mar Mentions Shaman',
@@ -48,7 +22,23 @@ strings_generic = {
 	'Sieb says \"oot\"',
 	'Tare is Late',
 	'Mispronounce Alaiss/Siala',
-	'Rollback Asks for Dispel/Heal'
+	'Rollback Asks for Dispel/Heal',
+	'Inappropriate Comment',
+	'Not Feeling Well',
+	'Wastes Cooldowns',
+	'Tare Gets Titanforge',
+	'Move to Discord',
+	'Someone Can\'t Get in WoW Chat',
+	'Cloak Nobody Wants',
+	'Tank Beats a DPS in Damage',
+	'Titan Slayers Join',
+	'Forgot Bonus Rolls',
+	'Wipe on Farm Boss',
+	'Becca Backseat Healing',
+	'Misunderstand Mechanices',
+	'Someone Explains Mechanic Wrong',
+	'Someone Late',
+	'Inexplicable Absence'
 	}
-	
+
 test = {0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24}
