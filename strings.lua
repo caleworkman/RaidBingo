@@ -1,4 +1,31 @@
 strings_generic = {
+	'Someone Loses >50k Gambling',
+	'Child Aggro',
+	'Wife Aggro',
+	'Comment about Stream',
+	'Zes Gets a Titan/Warforge',
+	'Sieb Loses Gambling',
+	'Sieb Mic Breathing',
+	'Mythics?',
+	'Sieb Says \"oot\"',
+	'Joe Gets No Loot',
+	'\"That\'s What She Said\"',
+	'Someone Forgets Bonus Rolls',
+	'Open Mic + Mechanical Keyboard',
+	'Inappropriate Comment',
+	'Wipe on Farm Boss',
+	'Someone Complains about Loot',
+	'Mispronounce \'Alaiss\'',
+	'Zes Cuts Under- performers',
+	'Zes Forgets to Turn Repairs On',
+	'Azu Way Ahead in DPS',
+	'Bamboo Speaks',
+	'FREE22',
+	'FREE23',
+	'FREE24'
+	}
+
+strings_rage = {
 	'Tare Dies on Trash',
 	'Mar Mentions Shaman',
 	'Forgets You Can\'t Trade Upgrade',

@@ -30,8 +30,7 @@ function ToggleVisible(self, button, down)
 			BingoFrame:Show()
 		end
 	elseif button == "RightButton" then
-		--DrawBoard(N, square_text)
-		print("Disabled")
+		DrawBoard(N, square_text)
 	end
 end
 
@@ -52,8 +51,11 @@ function eventHandler(self, event)
 			BingoFrame:Show()
 		end
 	elseif event == "ADDON_LOADED" then
-		if showBoard then
+		-- Board Display
+		if showBoard or showBoard == nil then
 			BingoFrame:Show()
+		else
+			BingoFrame:Hide()
 		end
 	end
 end
@@ -91,6 +93,7 @@ BingoFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 BingoFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 BingoFrame:RegisterEvent("ADDON_LOADED")
 BingoFrame:SetClampedToScreen(true)
+BingoFrame:SetPoint("CENTER", -400, 0)
 
 local t = BingoFrame:CreateTexture(nil, "BACKGROUND")
 t:SetColorTexture(1.0, 1.0, 1.0, 0)
@@ -113,9 +116,8 @@ BoardFrame.texture = t
 function DrawBoard(n, list)
 
 	-- Clear the old board
-	local children = BoardFrame:GetChildren()
+	local children = { BoardFrame:GetChildren() }
 	if children then
-		print(#children)
 		for _, child in ipairs(children) do
 			child:Hide()
 			child:SetParent(nil)
@@ -195,13 +197,7 @@ end
 
 DrawBoard(N, square_text)
 
--- Display
-BingoFrame:SetPoint("CENTER", -400, 0)
-if showBoard or showBoard == nil then
-	showBoard = true
-	BingoFrame:Show()
-else 
-	BingoFrame:Hide()
-end
+
+
 
 

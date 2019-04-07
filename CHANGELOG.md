@@ -5,10 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- TODO: Reset the board button isn't clearing old frames
-- TODO: Import string ability
-- TODO: Save game strings
-- TODO: Share game strings
+### Fixed
+- Updated squares for Titan Slayers
+- Fixed a bug which made the board show every time you logged in
 
 ## [0.1.1] - 2019-03-31
 ### Added
@@ -19,3 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2019-03-31
 ### Added
 - First release to Github
+
+## [TODO]
+- TODO: Reset the board button isn't clearing old frames
+- TODO: Import string ability
+- TODO: Save game strings
+- TODO: Share game strings
+- CONSIDER: Board changes depending on where are in the raid
+- CONSIDER: One person hosts, everyone can see each other's current board states
