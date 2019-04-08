@@ -1,7 +1,7 @@
 ## Interface: 80100
 ## Title: Raid Bingo
 ## Author: Cale Workman
-## Version: 0.1.0
+## Version: 0.1.2
 ## SavedVariables: showBoard, boardArrangement, boardState
 
 # Order is important
@@ -11,4 +11,5 @@ Libs\LibDBIcon-1.0\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
 strings.lua
+functions.lua
 main.lua

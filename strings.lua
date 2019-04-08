@@ -10,7 +10,7 @@ strings_generic = {
 	'Sieb Says \"oot\"',
 	'Joe Gets No Loot',
 	'\"That\'s What She Said\"',
-	'Someone Forgets Bonus Rolls',
+	'Forgets Bonus Rolls',
 	'Open Mic + Mechanical Keyboard',
 	'Inappropriate Comment',
 	'Wipe on Farm Boss',
@@ -20,9 +20,9 @@ strings_generic = {
 	'Zes Forgets to Turn Repairs On',
 	'Azu Way Ahead in DPS',
 	'Bamboo Speaks',
-	'FREE22',
-	'FREE23',
-	'FREE24'
+	'>100k DPS on Trash',
+	'Ride Druid on Run Back',
+	'\"DBM Pull\" >=3 Times Before Timer'
 	}
 
 strings_rage = {
@@ -69,4 +69,4 @@ strings_rage = {
 	'Open Mic + Mechanical Keyboard'
 	}
 
-test = {0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24}
+test = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24}

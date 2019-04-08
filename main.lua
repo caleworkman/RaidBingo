@@ -3,16 +3,16 @@ local square_text = strings_generic
 local buttonHeight = 70
 local buttonWidth = 70
 local borderThickness = 4
-local N = 5 -- number of squares on an edge 
+local N = 5 -- number of squares on an edge
 
 -- Returns a randomized subset of the list that fits the board
 function Randomize(list)
 	randomized = {}
-	copy = list
+	copied = copy(list)
 	
 	for i = 0, N*N-2 do
-		v = math.random(1, #list)
-		removed = table.remove(copy, v)
+		v = math.random(1, #copied)
+		removed = table.remove(copied, v)
 		table.insert(randomized, removed)
 	end
 	
@@ -20,7 +20,7 @@ function Randomize(list)
 end
 
 -- Show/Hide Bingo Frame 
-function ToggleVisible(self, button, down)
+function ClickMinimapIcon(self, button, down)
 	if button == "LeftButton" then
 		if BingoFrame:IsVisible() then
 			showBoard = false
@@ -30,7 +30,11 @@ function ToggleVisible(self, button, down)
 			BingoFrame:Show()
 		end
 	elseif button == "RightButton" then
-		DrawBoard(N, square_text)
+		boardState = {}
+		for i = 1, N*N do
+			boardState[i] = false
+		end
+		FillBoard(N, Randomize(square_text), boardState)
 	end
 end
 
@@ -44,19 +48,38 @@ end
 
 -- Event Handler
 function eventHandler(self, event)
+
+	-- Combat handling
 	if event == "PLAYER_REGEN_DISABLED" then -- enter/in combat
 		BingoFrame:Hide()
 	elseif event == "PLAYER_REGEN_ENABLED" then -- left/out of combat
 		if showBoard then
 			BingoFrame:Show()
 		end
+		
+	-- Addon Initialize
 	elseif event == "ADDON_LOADED" then
+
+		if isEmpty(boardState) or isEmpty(boardArrangement) then
+			boardState = {}
+			for i = 0, N*N-1 do
+				table.insert(boardState, false)
+			end
+			InitBoard(N)
+			FillBoard(N, Randomize(square_text), boardState)
+		else
+			InitBoard(N)
+			FillBoard(N, boardArrangement, boardState)
+		end
+		
 		-- Board Display
 		if showBoard or showBoard == nil then
 			BingoFrame:Show()
 		else
 			BingoFrame:Hide()
 		end
+		
+		self:UnregisterEvent("ADDON_LOADED")
 	end
 end
 
@@ -65,9 +88,9 @@ local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 	type = "data source",
 	text = "Raid Bingo",
 	icon = "Interface\\Icons\\classicon_demonhunter",--"Interface\\Icons\\INV_Chest_Cloth_17",
-	OnClick = ToggleVisible,
+	OnClick = ClickMinimapIcon,
 	OnTooltipShow = function(tt)
-		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.1"))
+		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.2"))
 		tt:AddLine(" ")
 		tt:AddLine("Left Click: Hide")
 		tt:AddLine("Right Click: Reset/Randomize")
@@ -112,32 +135,18 @@ t:SetColorTexture(0, 0, 0, 1)
 t:SetAllPoints(BoardFrame)
 BoardFrame.texture = t
 
--- Draw the board and buttons
-function DrawBoard(n, list)
-
-	-- Clear the old board
-	local children = { BoardFrame:GetChildren() }
-	if children then
-		for _, child in ipairs(children) do
-			child:Hide()
-			child:SetParent(nil)
-		end
-	end
-	
-	-- Randomize the board
-	square_text = Randomize(list)
-	local bingo_grid = {}
-	for i = 0, n-1 do
-		for j = 0, n-1 do
-			local k = n*i + j
-			bingo_grid[k] = 0
-			
+-- Initialize the Board 
+function InitBoard(n)
+	local grid = {}
+	for i = 1, n do
+		for j = 1, n do
+			local k = n*(i-1) + j
 			local button = CreateFrame("Button", nil, BoardFrame)
 			button:SetFrameStrata("BACKGROUND")
 			button:SetWidth(buttonWidth) 
 			button:SetHeight(buttonHeight)
-			x = j*(buttonWidth + borderThickness) + borderThickness
-			y = -i*(buttonHeight + borderThickness) - borderThickness
+			x = (j-1)*(buttonWidth + borderThickness) + borderThickness
+			y = -(i-1)*(buttonHeight + borderThickness) - borderThickness
 			button:SetPoint("TOPLEFT", x, y)
 			
 			local label = CreateFrame("Frame", nil, button)
@@ -157,15 +166,6 @@ function DrawBoard(n, list)
 			t:SetColorTexture(0, 0, 0)
 			t:SetAllPoints(button)
 			
-			middle = (n*n-1)/2
-			if k == middle then
-				label.text:SetText("FREE")
-			elseif k < middle then
-				label.text:SetText(square_text[k+1])
-			elseif k > middle then
-				label.text:SetText(square_text[k])
-			end
-			
 			local t0 = button:CreateTexture(nil, "ARTWORK")
 			t0:SetColorTexture(26/255, 31/255, 40/255)
 			t0:SetAllPoints(button)
@@ -178,12 +178,12 @@ function DrawBoard(n, list)
 			button:SetPushedTexture(t1)
 			
 			button:SetScript("OnClick", function(self)
-				if bingo_grid[k] == 0 then
-					bingo_grid[k] = 1
-					button:SetButtonState("PUSHED", "true")
+				if boardState[k] then
+					boardState[k] = false
+					self:SetButtonState("NORMAL")
 				else
-					bingo_grid[k] = 0
-					button:SetButtonState("NORMAL")
+					boardState[k] = true
+					self:SetButtonState("PUSHED", "true")
 				end
 			end)
 			
@@ -195,7 +195,31 @@ function DrawBoard(n, list)
 	end
 end
 
-DrawBoard(N, square_text)
+-- Draw a new board
+function FillBoard(n, list, state)
+	local buttons = { BoardFrame:GetChildren() }
+	local i = 1
+	boardArrangement = {}
+	local copied = copy(list)
+	for _, button in ipairs(buttons) do
+
+		if state[i] then
+			button:SetButtonState("PUSHED", true)
+		else
+			button:SetButtonState("NORMAL", false)
+		end
+		
+		label = button:GetChildren()
+		if i == (#buttons+1)/2 then
+			label.text:SetText("FREE")
+		else
+			text = table.remove(copied, 1)
+			label.text:SetText(text)
+			table.insert(boardArrangement, text)
+		end
+		i = i+1
+	end
+end
 
 
 

@@ -4,10 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-### Fixed
+## [0.1.2]
+### Added
 - Updated squares for Titan Slayers
+- Board state and text persists when logging in/out and reloading
+- Right clicking the minimap now resets the board
+
+### Fixed
 - Fixed a bug which made the board show every time you logged in
+
 
 ## [0.1.1] - 2019-03-31
 ### Added
