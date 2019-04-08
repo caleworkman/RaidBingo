@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [0.1.2]
 ### Added
 - Updated squares for Titan Slayers
@@ -25,7 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First release to Github
 
 ## [TODO]
-- TODO: Reset the board button isn't clearing old frames
 - TODO: Import string ability
 - TODO: Save game strings
 - TODO: Share game strings
