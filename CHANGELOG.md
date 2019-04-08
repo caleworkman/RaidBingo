@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.2]
+## [0.1.2] - 2019-04-07
 ### Added
 - Updated squares for Titan Slayers
 - Board state and text persists when logging in/out and reloading
@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed a bug which made the board show every time you logged in
-
 
 ## [0.1.1] - 2019-03-31
 ### Added
