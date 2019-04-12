@@ -5,20 +5,6 @@ local buttonWidth = 70
 local borderThickness = 4
 local N = 5 -- number of squares on an edge
 
--- Returns a randomized subset of the list that fits the board
-function Randomize(list)
-	randomized = {}
-	copied = copy(list)
-	
-	for i = 0, N*N-2 do
-		v = math.random(1, #copied)
-		removed = table.remove(copied, v)
-		table.insert(randomized, removed)
-	end
-	
-	return randomized
-end
-
 -- Show/Hide Bingo Frame 
 function ClickMinimapIcon(self, button, down)
 	if button == "LeftButton" then
@@ -34,7 +20,7 @@ function ClickMinimapIcon(self, button, down)
 		for i = 1, N*N do
 			boardState[i] = false
 		end
-		FillBoard(N, Randomize(square_text), boardState)
+		FillBoard(N, Randomize(square_text, N), boardState)
 	end
 end
 
@@ -44,6 +30,15 @@ function HighlightBorder()
 end
 function DehighlightBorder()
 	BingoFrame.texture:SetColorTexture(1,1,1,0)
+end
+
+function SetBoardState(k, v)
+	boardState[k] = v
+	if v then
+		if HasBingo(boardState) then
+			print('BINGO')
+		end
+	end
 end
 
 -- Event Handler
@@ -66,7 +61,7 @@ function eventHandler(self, event)
 				table.insert(boardState, false)
 			end
 			InitBoard(N)
-			FillBoard(N, Randomize(square_text), boardState)
+			FillBoard(N, Randomize(square_text, N), boardState)
 		else
 			InitBoard(N)
 			FillBoard(N, boardArrangement, boardState)
@@ -182,7 +177,8 @@ function InitBoard(n)
 					boardState[k] = false
 					self:SetButtonState("NORMAL")
 				else
-					boardState[k] = true
+					--boardState[k] = true
+					SetBoardState(k, true)
 					self:SetButtonState("PUSHED", "true")
 				end
 			end)
