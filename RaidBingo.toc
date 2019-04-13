@@ -10,6 +10,9 @@ Libs\LibDBIcon-1.0\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibDBIcon-1.0\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
+Libs\AceComm-3.0\AceComm-3.0.lua
+Libs\AceComm-3.0\ChatThrottleLib.lua
+
 strings.lua
 functions.lua
 main.lua
