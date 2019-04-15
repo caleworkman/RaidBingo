@@ -1,9 +1,10 @@
+N = 5 -- number of squares on an edge
+
 local icon = LibStub("LibDBIcon-1.0")
 local square_text = strings_generic
-local buttonHeight = 70
-local buttonWidth = 70
 local borderThickness = 4
-local N = 5 -- number of squares on an edge
+local defaultButtonSize = 70
+
 
 -- Show/Hide Bingo Frame 
 function ClickMinimapIcon(self, button, down)
@@ -15,12 +16,18 @@ function ClickMinimapIcon(self, button, down)
 			showBoard = true
 			BingoFrame:Show()
 		end
-	elseif button == "RightButton" then
+	elseif button == "MiddleButton" then
 		boardState = {}
 		for i = 1, N*N do
 			boardState[i] = false
 		end
 		FillBoard(N, Randomize(square_text, N), boardState)
+	elseif button == "RightButton" then
+		if ConfigFrame:IsVisible() then
+			ConfigFrame:Hide()
+		else
+			ConfigFrame:Show()
+		end
 	end
 end
 
@@ -54,16 +61,25 @@ function eventHandler(self, event)
 		
 	-- Addon Initialize
 	elseif event == "ADDON_LOADED" then
-
+	
+		-- Layout customizations
+		if buttonSize == nil then
+			buttonSize = 70
+		end
+		
+		ConfigFrameEditBox:SetText(buttonSize)
+		
 		if isEmpty(boardState) or isEmpty(boardArrangement) then
 			boardState = {}
 			for i = 0, N*N-1 do
 				table.insert(boardState, false)
 			end
 			InitBoard(N)
+			ResizeBoard()
 			FillBoard(N, Randomize(square_text, N), boardState)
 		else
 			InitBoard(N)
+			ResizeBoard(N)
 			FillBoard(N, boardArrangement, boardState)
 		end
 		
@@ -85,10 +101,11 @@ local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 	icon = "Interface\\Icons\\classicon_demonhunter",--"Interface\\Icons\\INV_Chest_Cloth_17",
 	OnClick = ClickMinimapIcon,
 	OnTooltipShow = function(tt)
-		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.2"))
+		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.3"))
 		tt:AddLine(" ")
 		tt:AddLine("Left Click: Hide")
-		tt:AddLine("Right Click: Reset/Randomize")
+		tt:AddLine("Middle Click: Reset/Randomize")
+		tt:AddLine("Right Click: Config")
 	end
 })
 icon:Register("RaidBingo", bingoLDB, RaidBingoDB)
@@ -97,8 +114,8 @@ icon:Show()
 -- Initialize the whole addon (outer) frame
 local BingoFrame = CreateFrame("Frame", "BingoFrame", UIParent)
 BingoFrame:SetFrameStrata("BACKGROUND")
-BingoFrame:SetWidth(N*(buttonWidth+borderThickness) + 20) 
-BingoFrame:SetHeight(N*(buttonHeight+borderThickness) + 20)
+BingoFrame:SetWidth(N*(defaultButtonSize+borderThickness) + 20) 
+BingoFrame:SetHeight(N*(defaultButtonSize+borderThickness) + 20)
 BingoFrame:SetMovable(true)
 BingoFrame:EnableMouse(true)
 BingoFrame:RegisterForDrag("LeftButton")
@@ -121,8 +138,8 @@ BingoFrame.texture = t
 -- Initialize the playable board
 local BoardFrame = CreateFrame("Frame", "BoardFrame", BingoFrame)
 BoardFrame:SetFrameStrata("BACKGROUND")
-BoardFrame:SetWidth(N*(buttonWidth+borderThickness)+borderThickness) 
-BoardFrame:SetHeight(N*(buttonHeight+borderThickness)+borderThickness)
+BoardFrame:SetWidth(N*(defaultButtonSize+borderThickness)+borderThickness) 
+BoardFrame:SetHeight(N*(defaultButtonSize+borderThickness)+borderThickness)
 BoardFrame:SetPoint("CENTER")
 
 local t = BoardFrame:CreateTexture(nil, "BACKGROUND")
@@ -138,16 +155,16 @@ function InitBoard(n)
 			local k = n*(i-1) + j
 			local button = CreateFrame("Button", nil, BoardFrame)
 			button:SetFrameStrata("BACKGROUND")
-			button:SetWidth(buttonWidth) 
-			button:SetHeight(buttonHeight)
-			x = (j-1)*(buttonWidth + borderThickness) + borderThickness
-			y = -(i-1)*(buttonHeight + borderThickness) - borderThickness
+			button:SetWidth(buttonSize) 
+			button:SetHeight(buttonSize)
+			x = (j-1)*(buttonSize + borderThickness) + borderThickness
+			y = -(i-1)*(buttonSize + borderThickness) - borderThickness
 			button:SetPoint("TOPLEFT", x, y)
 			
 			local label = CreateFrame("Frame", nil, button)
 			label:SetFrameStrata("BACKGROUND")
-			label:SetWidth(buttonWidth) 
-			label:SetHeight(buttonHeight)
+			label:SetWidth(buttonSize) 
+			label:SetHeight(buttonSize)
 			label:SetAllPoints(button)
 			
 			label.text = label.text or
@@ -217,7 +234,35 @@ function FillBoard(n, list, state)
 	end
 end
 
+-- Resize a board
+function ResizeBoard(n)
+	BingoFrame:SetWidth(n*(buttonSize+borderThickness) + 20) 
+	BingoFrame:SetHeight(n*(buttonSize+borderThickness) + 20)
+	BoardFrame:SetWidth(n*(buttonSize+borderThickness)+borderThickness) 
+	BoardFrame:SetHeight(n*(buttonSize+borderThickness)+borderThickness)
 
+	-- Resize all the squares
+	squares = { BoardFrame:GetChildren() }
+	for k,square in ipairs(squares) do
+		local i = math.floor((k-1)/n) + 1
+		local j = math.fmod((k-1),n) + 1
+	
+		square:SetWidth(buttonSize) 
+		square:SetHeight(buttonSize)
+		
+		children = { square:GetChildren() } 
+		for _, child in ipairs(children) do
+
+			x = (j-1)*(buttonSize + borderThickness) + borderThickness
+			y = -(i-1)*(buttonSize + borderThickness) - borderThickness
+			square:SetPoint("TOPLEFT", x, y)
+				
+			child:SetWidth(buttonSize) 
+			child:SetHeight(buttonSize)
+			child:SetAllPoints(square)
+		end
+	end
+end
 
 
 

@@ -2,7 +2,8 @@
 ## Title: Raid Bingo
 ## Author: Cale Workman
 ## Version: 0.1.2
-## SavedVariables: showBoard, boardArrangement, boardState
+## OptionalDeps: myAddOns
+## SavedVariables: showBoard, boardArrangement, boardState, buttonSize
 
 # Order is important
 Libs\LibDBIcon-1.0\LibStub\LibStub.lua
@@ -16,3 +17,4 @@ Libs\AceComm-3.0\ChatThrottleLib.lua
 strings.lua
 functions.lua
 main.lua
+config.xml

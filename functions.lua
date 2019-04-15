@@ -104,3 +104,44 @@ function IsWinningDiagonal(list)
 		return false
 	end
 end
+
+
+function ConfigToDefault()
+	buttonSize = 70
+	borderThickness = 4
+	N = 5 -- number of squares on an edge
+	
+	ResizeBoard(N)
+	ConfigFrameEditBox:SetText(buttonSize)
+end
+
+
+function ClickChangeSquareSize(self, button, down)
+	local buttonName = string.lower(self:GetName())
+	if string.find(buttonName, 'increase') then
+		buttonSize = buttonSize + 1
+	elseif string.find(buttonName, 'decrease') then
+		buttonSize = buttonSize - 1
+	end
+	
+	if buttonSize >= 999 then
+		buttonSize = 999
+	elseif buttonSize <= 0 then
+		buttonSize = 0
+	end
+	
+	ConfigFrameEditBox:SetText(buttonSize)
+	ResizeBoard(N)
+end
+
+
+function ConfigSetValue(self)
+	local newValue = self:GetText()
+	
+	if self:GetName() == 'ConfigFrameEditBox' then
+		if buttonSize ~= newValue then
+			buttonSize = newValue
+			ResizeBoard(N)
+		end
+	end
+end
