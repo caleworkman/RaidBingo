@@ -33,10 +33,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2019-03-31
 ### Added
 - First release to Github
-
-## [TODO]
-- TODO: Import string ability
-- TODO: Save game strings
-- TODO: Share game strings
-- CONSIDER: Board changes depending on where are in the raid
-- CONSIDER: One person hosts, everyone can see each other's current board states
