@@ -67,6 +67,7 @@ function eventHandler(self, event)
 			buttonSize = 70
 		end
 		
+		-- Set all the configuration input boxes to their values
 		ConfigFrameEditBox:SetText(buttonSize)
 		
 		if isEmpty(boardState) or isEmpty(boardArrangement) then
