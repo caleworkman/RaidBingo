@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### TODO
+- Party communication
+- See other people's boards
+- Notify when a party member gets a square
+- Notify when a party member gets bingo
+- Maybe: color your squares a different color if another member gets that square
 
 ## [0.1.3] - 2019-04-15
 ### Added
