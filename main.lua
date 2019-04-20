@@ -121,6 +121,10 @@ function OnCommReceived(prefix, text)
 	otherPlayers[player] = {}
 	otherPlayers[player].arrangement = arrangement
 	otherPlayers[player].state = state
+	
+	for player, board in pairs(otherPlayers) do
+		UIDropDownMenu_AddButton(player)
+	end
 end
 AceComm:RegisterComm('RaidBingo', OnCommReceived)
 
@@ -162,11 +166,22 @@ BoardFrame.texture = t
 
 
 -- Other Players menu
-local dropDown = CreateFrame('Frame', 'OtherPlayers', UIParent, 'UIDropDownMenuTemplate')
-dropDown:SetPoint('CENTER')
-UIDropDownMenu_SetWidth(dropDown, 200)
-UIDropDownMenu_Initialize(dropDown, WPDropDownDemo_Menu)
-UIDropDownMenu_SetText(dropDown, 'Other Players')
+local RaidBingoPlayers = CreateFrame('Frame', 'RaidBingoPlayers', UIParent, 'UIDropDownMenuTemplate')
+RaidBingoPlayers:SetPoint('TOPRIGHT', BoardFrame, 'BOTTOMRIGHT', -110, 0)
+UIDropDownMenu_SetText(RaidBingoPlayers, 'Players')
+UIDropDownMenu_Initialize(RaidBingoPlayers, function(self, level)
+	local info = UIDropDownMenu_CreateInfo()
+	for player, board in pairs(otherPlayers) do
+		info.text, info.arg1 = player, player
+		info.func = self.SetValue
+		UIDropDownMenu_AddButton(info)
+	end
+end)
+
+function RaidBingoPlayers:SetValue(player)
+	UIDropDownMenu_SetText(RaidBingoPlayers, player)
+	CloseDropDownMenus()
+end
 
 -- Initialize the Board 
 function InitBoard(n)
