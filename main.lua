@@ -1,9 +1,12 @@
 N = 5 -- number of squares on an edge
 
 local icon = LibStub("LibDBIcon-1.0")
+local AceComm = LibStub('AceComm-3.0')
 local square_text = strings_generic
 local borderThickness = 4
 local defaultButtonSize = 70
+
+local otherPlayers = {}
 
 
 -- Show/Hide Bingo Frame 
@@ -112,6 +115,15 @@ local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 icon:Register("RaidBingo", bingoLDB, RaidBingoDB)
 icon:Show()
 
+-- Addon Communication
+function OnCommReceived(prefix, text)
+	local player, arrangement, state = string.match(text, '(.*)|(.*)|(.*)')
+	otherPlayers[player] = {}
+	otherPlayers[player].arrangement = arrangement
+	otherPlayers[player].state = state
+end
+AceComm:RegisterComm('RaidBingo', OnCommReceived)
+
 -- Initialize the whole addon (outer) frame
 local BingoFrame = CreateFrame("Frame", "BingoFrame", UIParent)
 BingoFrame:SetFrameStrata("BACKGROUND")
@@ -147,6 +159,14 @@ local t = BoardFrame:CreateTexture(nil, "BACKGROUND")
 t:SetColorTexture(0, 0, 0, 1)
 t:SetAllPoints(BoardFrame)
 BoardFrame.texture = t
+
+
+-- Other Players menu
+local dropDown = CreateFrame('Frame', 'OtherPlayers', UIParent, 'UIDropDownMenuTemplate')
+dropDown:SetPoint('CENTER')
+UIDropDownMenu_SetWidth(dropDown, 200)
+UIDropDownMenu_Initialize(dropDown, WPDropDownDemo_Menu)
+UIDropDownMenu_SetText(dropDown, 'Other Players')
 
 -- Initialize the Board 
 function InitBoard(n)
@@ -199,6 +219,10 @@ function InitBoard(n)
 					SetBoardState(k, true)
 					self:SetButtonState("PUSHED", "true")
 				end
+				-- Build the comm message to send
+				player = UnitName('player')
+				data = player .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+				AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 			end)
 			
 			button:SetScript("OnEnter", HighlightBorder)

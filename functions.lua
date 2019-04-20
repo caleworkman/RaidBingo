@@ -36,6 +36,19 @@ function Randomize(list, n)
 	return randomized
 end
 
+-- Writes a table as a comma-separated string
+function ToString(tbl)
+	local s = ''
+	for _, t in ipairs(tbl) do
+		if s == '' then
+			s = tostring(t)
+		else
+			s = s .. ',' .. tostring(t)
+		end
+	end
+	return s
+end
+
 --Functions to check if a list is a winning bingo pattern
 function HasBingo(list)
 	return IsWinningColumn(list) or IsWinningRow(list) or IsWinningDiagonal(list)
@@ -145,3 +158,4 @@ function ConfigSetValue(self)
 		end
 	end
 end
+
