@@ -257,7 +257,7 @@ function InitBoard(n)
 					self:SetButtonState("PUSHED", "true")
 				end
 				-- Build the comm message to send
-				data = 'BROADCAST' .. ':' .. UnitName('player') .. '2|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+				data = 'BROADCAST' .. ':' .. UnitName('player') .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
 				AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 				CloseDropDownMenus()
 			end)
