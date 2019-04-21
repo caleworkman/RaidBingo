@@ -1,5 +1,5 @@
 strings_generic = {
-	'>100k DPS on Trash',d
+	'>100k DPS on Trash',
 	'\"Go to Narnia\"',
 	'\"That\'s What She Said\"',
 	'\"It Be Like That Sometimes\"',
