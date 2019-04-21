@@ -49,6 +49,31 @@ function ToString(tbl)
 	return s
 end
 
+function ToTable(s)
+	local tbl = {}
+	
+	for substr in string.gmatch(s, '[^'.. ',' .. ']*') do
+		if substr ~= nil and string.len(substr) > 0 then
+			table.insert(tbl, substr)
+		end
+	end
+	
+	return tbl
+end
+
+function ToBooleanTable(s)
+	local tbl = {}
+	
+	for substr in string.gmatch(s, '[^'.. ',' .. ']*') do
+		if substr ~= nil and string.len(substr) > 0 then
+			table.insert(tbl, substr == 'true')
+		end
+	end
+	
+	return tbl
+end
+	
+
 --Functions to check if a list is a winning bingo pattern
 function HasBingo(list)
 	return IsWinningColumn(list) or IsWinningRow(list) or IsWinningDiagonal(list)

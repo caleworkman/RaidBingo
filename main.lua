@@ -6,7 +6,12 @@ local square_text = strings_generic
 local borderThickness = 4
 local defaultButtonSize = 70
 
-local otherPlayers = {}
+local players = {}
+local selectedPlayer = UnitName('player')
+
+--players['testing'] = {}
+--players['testing'].arrangement = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24}
+--players['testing'].state = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}
 
 
 -- Show/Hide Bingo Frame 
@@ -24,7 +29,8 @@ function ClickMinimapIcon(self, button, down)
 		for i = 1, N*N do
 			boardState[i] = false
 		end
-		FillBoard(N, Randomize(square_text, N), boardState)
+		boardArrangement = Randomize(square_text, N)
+		FillBoard(boardArrangement, boardState, UnitName('player'))
 	elseif button == "RightButton" then
 		if ConfigFrame:IsVisible() then
 			ConfigFrame:Hide()
@@ -75,17 +81,19 @@ function eventHandler(self, event)
 		
 		if isEmpty(boardState) or isEmpty(boardArrangement) then
 			boardState = {}
+			boardArrangement = {Randomize(square_text, N)}
 			for i = 0, N*N-1 do
 				table.insert(boardState, false)
 			end
-			InitBoard(N)
-			ResizeBoard()
-			FillBoard(N, Randomize(square_text, N), boardState)
-		else
-			InitBoard(N)
-			ResizeBoard(N)
-			FillBoard(N, boardArrangement, boardState)
 		end
+
+		InitBoard(N)
+		ResizeBoard(N)
+		FillBoard(boardArrangement, boardState, UnitName('player'))
+		
+		players[UnitName('player')] = {}
+		players[UnitName('player')].arrangement = boardArrangement
+		players[UnitName('player')].state = boardState
 		
 		-- Board Display
 		if showBoard or showBoard == nil then
@@ -115,14 +123,15 @@ local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 icon:Register("RaidBingo", bingoLDB, RaidBingoDB)
 icon:Show()
 
--- Addon Communication
+-- Addon Communicationf
 function OnCommReceived(prefix, text)
 	local player, arrangement, state = string.match(text, '(.*)|(.*)|(.*)')
-	otherPlayers[player] = {}
-	otherPlayers[player].arrangement = arrangement
-	otherPlayers[player].state = state
+	players[player] = {}
+	players[player].arrangement = ToTable(arrangement)
+	players[player].state = ToBooleanTable(state)
 	
-	for player, board in pairs(otherPlayers) do
+	local info = UIDropDownMenu_CreateInfo()
+	for player, board in pairs(players) do
 		UIDropDownMenu_AddButton(player)
 	end
 end
@@ -165,21 +174,25 @@ t:SetAllPoints(BoardFrame)
 BoardFrame.texture = t
 
 
--- Other Players menu
-local RaidBingoPlayers = CreateFrame('Frame', 'RaidBingoPlayers', UIParent, 'UIDropDownMenuTemplate')
+-- Players menu
+local RaidBingoPlayers = CreateFrame('Frame', 'RaidBingoPlayers', BingoFrame, 'UIDropDownMenuTemplate')
 RaidBingoPlayers:SetPoint('TOPRIGHT', BoardFrame, 'BOTTOMRIGHT', -110, 0)
 UIDropDownMenu_SetText(RaidBingoPlayers, 'Players')
 UIDropDownMenu_Initialize(RaidBingoPlayers, function(self, level)
 	local info = UIDropDownMenu_CreateInfo()
-	for player, board in pairs(otherPlayers) do
-		info.text, info.arg1 = player, player
+	for player, board in pairs(players) do
+		info.text, info.arg1, info.checked = player, player, player == selectedPlayer
 		info.func = self.SetValue
 		UIDropDownMenu_AddButton(info)
 	end
 end)
 
 function RaidBingoPlayers:SetValue(player)
+	selectedPlayer = player
 	UIDropDownMenu_SetText(RaidBingoPlayers, player)
+	local text = players[player].arrangement
+	local state = players[player].state
+	FillBoard(text, state, player)
 	CloseDropDownMenus()
 end
 
@@ -210,16 +223,12 @@ function InitBoard(n)
 			label.text:SetTextColor(1.0, 1.0, 1.0, 1.0)
 			label.text:SetAllPoints(true)
 			
-			local t = button:CreateTexture(nil, "ARTWORK")
-			t:SetColorTexture(0, 0, 0)
-			t:SetAllPoints(button)
-			
 			local t0 = button:CreateTexture(nil, "ARTWORK")
-			t0:SetColorTexture(26/255, 31/255, 40/255)
+			t0:SetColorTexture(colorSquare.r, colorSquare.g, colorSquare.b)
 			t0:SetAllPoints(button)
 			
 			local t1 = button:CreateTexture(nil, "ARTWORK")
-			t1:SetColorTexture(66/255, 134/255, 244/255)
+			t1:SetColorTexture(colorSquarePushed.r, colorSquarePushed.g, colorSquarePushed.b)
 			t1:SetAllPoints(button)
 
 			button:SetNormalTexture(t0)
@@ -230,7 +239,6 @@ function InitBoard(n)
 					boardState[k] = false
 					self:SetButtonState("NORMAL")
 				else
-					--boardState[k] = true
 					SetBoardState(k, true)
 					self:SetButtonState("PUSHED", "true")
 				end
@@ -238,6 +246,7 @@ function InitBoard(n)
 				player = UnitName('player')
 				data = player .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
 				AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
+				CloseDropDownMenus()
 			end)
 			
 			button:SetScript("OnEnter", HighlightBorder)
@@ -249,10 +258,9 @@ function InitBoard(n)
 end
 
 -- Draw a new board
-function FillBoard(n, list, state)
+function FillBoard(list, state, player)
 	local buttons = { BoardFrame:GetChildren() }
 	local i = 1
-	boardArrangement = {}
 	local copied = copy(list)
 	for _, button in ipairs(buttons) do
 
@@ -262,15 +270,26 @@ function FillBoard(n, list, state)
 			button:SetButtonState("NORMAL", false)
 		end
 		
+		if player ~= UnitName('player') then
+			if state[i] then
+				local t2 = button:CreateTexture(nil, "ARTWORK")
+				t2:SetColorTexture(colorSquareDisabled.r, colorSquareDisabled.g, colorSquareDisabled.b)
+				t2:SetAllPoints(button)
+				button:SetDisabledTexture(t2)
+			else
+				button:SetDisabledTexture(nil)
+			end
+			button:Disable()
+		end
+		
 		label = button:GetChildren()
 		if i == (#buttons+1)/2 then
 			label.text:SetText("FREE")
 		else
 			text = table.remove(copied, 1)
 			label.text:SetText(text)
-			table.insert(boardArrangement, text)
 		end
-		i = i+1
+		i = i + 1
 	end
 end
 

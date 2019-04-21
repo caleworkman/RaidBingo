@@ -20,7 +20,7 @@ strings_generic = {
 	'Sieben Says \"oot\"',
 	'Asks for Auction Mount',
 	'Asks for Mailbox',
-	'Complains about Loot',
+	'Complaint about Loot',
 	'Loses >50k Gambling',
 	'Weed Reference',
 	'Wife/Child Aggro',
