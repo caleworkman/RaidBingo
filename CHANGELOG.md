@@ -2,12 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- See other guild members boards
+
 ### TODO
-- Party communication
-- See other people's boards
-- Notify when a party member gets a square
-- Notify when a party member gets bingo
-- Maybe: color your squares a different color if another member gets that square
+- Add a little icon in a square if someone else has it but you don't
+- Add a checkbox toggle in the config if you want to share your board or not
+- Which channel to share board in (guild or raid)
+- Notify others when you get Bingo
 
 ## [0.1.3] - 2019-04-15
 ### Added
