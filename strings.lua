@@ -10,7 +10,7 @@ strings_generic = {
 	'Someone Forgets Bonus Rolls',
 	'Extended Raid Hours',
 	'Inappropriate Comment',
-	'Joe Gets No Loot',
+	'All of Facta Shows Up',
 	'Mispronounce Someone\'s Name',
 	'Mythics?',
 	'Mechanical Keyboard Sounds',
@@ -18,10 +18,10 @@ strings_generic = {
 	'Sieben Loses Gambling',
 	'Mic Breathing',
 	'Sieben Says \"oot\"',
-	'Someone Asks for Auction Mount',
-	'Someone Asks for Mailbox',
-	'Someone Complains about Loot',
-	'Someone Loses >50k Gambling',
+	'Asks for Auction Mount',
+	'Asks for Mailbox',
+	'Complains about Loot',
+	'Loses >50k Gambling',
 	'Weed Reference',
 	'Wife/Child Aggro',
 	'Wipe on Farm Boss',
@@ -30,5 +30,6 @@ strings_generic = {
 	'Zes Forgets to Turn Repairs On',
 	'Zes Gets a Titan/Warforge',
 	'Obnoxious Background Noise',
-	'Someone Releases Despite Being Told Not'
+	'Someone Releases Despite Being Told Not',
+	'Asks for a Buff'
 	}
