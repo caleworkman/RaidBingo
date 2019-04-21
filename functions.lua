@@ -183,4 +183,3 @@ function ConfigSetValue(self)
 		end
 	end
 end
-

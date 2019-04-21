@@ -31,6 +31,8 @@ function ClickMinimapIcon(self, button, down)
 		end
 		boardArrangement = Randomize(square_text, N)
 		FillBoard(boardArrangement, boardState, UnitName('player'))
+		local data = 'BROADCAST' .. ':' .. UnitName('player') .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+		AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 	elseif button == "RightButton" then
 		if ConfigFrame:IsVisible() then
 			ConfigFrame:Hide()
@@ -52,7 +54,7 @@ function SetBoardState(k, v)
 	boardState[k] = v
 	if v then
 		if HasBingo(boardState) then
-			print('BINGO')
+			AceComm:SendCommMessage('RaidBingo', 'BINGO:'..UnitName('player'), 'GUILD')
 		end
 	end
 end
@@ -102,6 +104,8 @@ function eventHandler(self, event)
 			BingoFrame:Hide()
 		end
 		
+		AceComm:SendCommMessage('RaidBingo', 'REQUEST:', 'GUILD')
+		
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end
@@ -125,14 +129,24 @@ icon:Show()
 
 -- Addon Communicationf
 function OnCommReceived(prefix, text)
-	local player, arrangement, state = string.match(text, '(.*)|(.*)|(.*)')
-	players[player] = {}
-	players[player].arrangement = ToTable(arrangement)
-	players[player].state = ToBooleanTable(state)
-	
-	local info = UIDropDownMenu_CreateInfo()
-	for player, board in pairs(players) do
-		UIDropDownMenu_AddButton(player)
+
+	local messageType, body = string.match(text, '(.*):(.*)')
+
+	if messageType == 'BROADCAST' then
+		local player, arrangement, state = string.match(body, '(.*)|(.*)|(.*)')
+		players[player] = {}
+		players[player].arrangement = ToTable(arrangement)
+		players[player].state = ToBooleanTable(state)
+		local info = UIDropDownMenu_CreateInfo()
+		for player, board in pairs(players) do
+			UIDropDownMenu_AddButton(player)
+		end
+	elseif messageType == 'REQUEST' then
+		local data = 'BROADCAST' .. ':' .. UnitName('player') .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+		AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
+	elseif messageType == 'BINGO' then
+		local player = body
+		print(player .. ' has bingo!')
 	end
 end
 AceComm:RegisterComm('RaidBingo', OnCommReceived)
@@ -243,8 +257,7 @@ function InitBoard(n)
 					self:SetButtonState("PUSHED", "true")
 				end
 				-- Build the comm message to send
-				player = UnitName('player')
-				data = player .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+				data = 'BROADCAST' .. ':' .. UnitName('player') .. '2|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
 				AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 				CloseDropDownMenus()
 			end)
