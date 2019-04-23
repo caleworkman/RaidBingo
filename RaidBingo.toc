@@ -1,7 +1,7 @@
 ## Interface: 80100
 ## Title: Raid Bingo
 ## Author: Cale Workman
-## Version: 0.1.2
+## Version: 0.1.4
 ## OptionalDeps: myAddOns
 ## SavedVariables: showBoard, boardArrangement, boardState, buttonSize
 

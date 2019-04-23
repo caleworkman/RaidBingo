@@ -1,13 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.1.4] - 2019-04-22
 - See other guild members boards
-
-### TODO
-- Add a little icon in a square if someone else has it but you don't
-- Add a checkbox toggle in the config if you want to share your board or not
-- Which channel to share board in (guild or raid)
 - Notify others when you get Bingo
 
 ## [0.1.3] - 2019-04-15

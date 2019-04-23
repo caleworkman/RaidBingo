@@ -114,10 +114,10 @@ end
 local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 	type = "data source",
 	text = "Raid Bingo",
-	icon = "Interface\\Icons\\classicon_demonhunter",--"Interface\\Icons\\INV_Chest_Cloth_17",
+	icon = "Interface\\Icons\\classicon_demonhunter",
 	OnClick = ClickMinimapIcon,
 	OnTooltipShow = function(tt)
-		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.3"))
+		tt:AddLine(string.format('%s v%s', "Raid Bingo", "0.1.4"))
 		tt:AddLine(" ")
 		tt:AddLine("Left Click: Hide")
 		tt:AddLine("Middle Click: Reset/Randomize")
@@ -127,7 +127,7 @@ local bingoLDB = LibStub("LibDataBroker-1.1"):NewDataObject("Raid Bingo", {
 icon:Register("RaidBingo", bingoLDB, RaidBingoDB)
 icon:Show()
 
--- Addon Communicationf
+-- Addon Communication
 function OnCommReceived(prefix, text)
 
 	local messageType, body = string.match(text, '(.*):(.*)')
