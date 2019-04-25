@@ -9,11 +9,6 @@ local defaultButtonSize = 70
 local players = {}
 local selectedPlayer = UnitName('player')
 
---players['testing'] = {}
---players['testing'].arrangement = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24}
---players['testing'].state = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}
-
-
 -- Show/Hide Bingo Frame 
 function ClickMinimapIcon(self, button, down)
 	if button == "LeftButton" then
@@ -63,6 +58,7 @@ function ResetBoard()
 	AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 end
 
+
 -- Event Handler
 function eventHandler(self, event)
 
@@ -108,8 +104,10 @@ function eventHandler(self, event)
 			BingoFrame:Hide()
 		end
 		
+		-- Request everyone else's board and braodcast your own
 		AceComm:SendCommMessage('RaidBingo', 'REQUEST:', 'GUILD')
-		
+		local data = 'BROADCAST' .. ':' .. UnitName('player') .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+		AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end

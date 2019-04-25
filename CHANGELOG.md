@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - See other guild members boards
 - Notify others when you get Bingo
 - Added a reset button in the config screen
+- Your board is now broadcast to others once the addon is loaded instead of waiting for you to update.
 
 ## [0.1.3] - 2019-04-15
 ### Added
