@@ -25,14 +25,7 @@ function ClickMinimapIcon(self, button, down)
 			BingoFrame:Show()
 		end
 	elseif button == "MiddleButton" then
-		boardState = {}
-		for i = 1, N*N do
-			boardState[i] = false
-		end
-		boardArrangement = Randomize(square_text, N)
-		FillBoard(boardArrangement, boardState, UnitName('player'))
-		local data = 'BROADCAST' .. ':' .. UnitName('player') .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
-		AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
+		ResetBoard()
 	elseif button == "RightButton" then
 		if ConfigFrame:IsVisible() then
 			ConfigFrame:Hide()
@@ -57,6 +50,17 @@ function SetBoardState(k, v)
 			AceComm:SendCommMessage('RaidBingo', 'BINGO:'..UnitName('player'), 'GUILD')
 		end
 	end
+end
+
+function ResetBoard()
+	boardState = {}
+	for i = 1, N*N do
+		boardState[i] = false
+	end
+	boardArrangement = Randomize(square_text, N)
+	FillBoard(boardArrangement, boardState, UnitName('player'))
+	local data = 'BROADCAST' .. ':' .. UnitName('player') .. '|' .. ToString(boardArrangement) .. '|' .. ToString(boardState)
+	AceComm:SendCommMessage('RaidBingo', data, 'GUILD')
 end
 
 -- Event Handler

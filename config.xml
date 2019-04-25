@@ -51,7 +51,7 @@
 			</Scripts>
 		</Button>
 		
-		<EditBox name="$parentEditBox" letters="3" numeric="true" font="GameFontWhite" autofocus="false" inherits="InputBoxTemplate">3
+		<EditBox name="$parentEditBox" letters="3" numeric="true" font="GameFontWhite" autofocus="false" inherits="InputBoxTemplate">
 			<Size x="40" y="32" />
 			<Anchors>
 				<Anchor point="LEFT" relativeTo="$parentButtonDecreaseWidth" relativePoint="RIGHT" x="10" y="0" />
@@ -71,7 +71,15 @@
 			</Scripts>
 		</Button>
 		
-	
+		<Button name="$parentButtonResetBoard" inherits="OptionsButtonTemplate" text="Reset Board">
+			<Anchors>
+				<Anchor point="LEFT" relativeTo="$parentButtonWidthLabel" relativePoint="BOTTOMLEFT" x="0" y="-20" />
+			</Anchors>
+			<Scripts>
+				<OnClick> ResetBoard() </OnClick>
+			</Scripts>
+		</Button>
+
 		<Button name="$parentButtonClose" inherits="OptionsButtonTemplate" text="Close">
 			<Anchors>
 				<Anchor point="BOTTOMRIGHT">
