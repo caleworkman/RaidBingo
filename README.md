@@ -1,5 +1,8 @@
 # WoW Raid Bingo
 
+## Description
+A simple bingo game to be played inside the retail version of World of Warcraft.
+
 ## Setup Instructions
 1. Clone or Download 
 2. Download ZIP
