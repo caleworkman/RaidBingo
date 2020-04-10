@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.5] - 2020-04-10
+### Added
+- Screenshot to README.md
+
+### Changed
+- Updated strings for Titan Slayers
+- Renamed "Libs" to "libs" folder
+- Moved code into "src" folder
+
 ## [0.1.4] - 2019-04-25
 ### Added
 - See other guild members boards

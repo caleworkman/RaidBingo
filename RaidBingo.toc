@@ -1,21 +1,21 @@
 ## Interface: 80100
 ## Title: Raid Bingo
 ## Author: Cale Workman
-## Version: 0.1.4
+## Version: 0.1.5
 ## OptionalDeps: myAddOns
 ## SavedVariables: showBoard, boardArrangement, boardState, buttonSize
 
 # Order is important
-Libs\LibDBIcon-1.0\LibStub\LibStub.lua
-Libs\LibDBIcon-1.0\CallbackHandler-1.0\CallbackHandler-1.0.lua
-Libs\LibDBIcon-1.0\LibDataBroker-1.1\LibDataBroker-1.1.lua
-Libs\LibDBIcon-1.0\LibDBIcon-1.0\LibDBIcon-1.0.lua
+libs\LibDBIcon-1.0\LibStub\LibStub.lua
+libs\LibDBIcon-1.0\CallbackHandler-1.0\CallbackHandler-1.0.lua
+libs\LibDBIcon-1.0\LibDataBroker-1.1\LibDataBroker-1.1.lua
+libs\LibDBIcon-1.0\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
-Libs\AceComm-3.0\AceComm-3.0.lua
-Libs\AceComm-3.0\ChatThrottleLib.lua
+libs\AceComm-3.0\AceComm-3.0.lua
+libs\AceComm-3.0\ChatThrottleLib.lua
 
-colors.lua
-strings.lua
-functions.lua
-main.lua
-config.xml
+src/colors.lua
+src/strings.lua
+src/functions.lua
+src/main.lua
+src/config.xml
