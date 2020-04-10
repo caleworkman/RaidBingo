@@ -14,4 +14,4 @@ A simple bingo game to be played inside the retail version of World of Warcraft.
 Eventually I will add a way to do this in game
 1. Open /src/Strings.lua
 2. Add to strings_generic
-3. Remember to escape any quotes or apostrophes (i.e. the word "can't" becomes "can\\\'t")
+3. Remember to escape any quotes or apostrophes (e.g. the word "can't" becomes "can\\\'t")
