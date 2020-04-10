@@ -1,5 +1,7 @@
 # WoW Raid Bingo
 
+![In-Game Screenshot of Board("doc/screenshot.png")
+
 ## Description
 A simple bingo game to be played inside the retail version of World of Warcraft.
 
